@@ -15,9 +15,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(SignInSuccessful());
         } catch (e) {
           print('Error: $e');
-          emit(SignInFailed('Error logging in : $e'));
+          emit(SignInFailed('Error logging in'));
         }
       },
     );
+
+    on<SignOutUser>((event, emit) {
+      emit(AuthLoadingState());
+      try {
+        emit(SignOutSuccessful());
+      } catch (e) {
+        emit(SignOutFailed('Failed to sign out'));
+      }
+    },);
   }
 }

@@ -18,3 +18,12 @@ class SignInFailed extends AuthState {
   final String message;
   SignInFailed(this.message);
 }
+
+class SignOutSuccessful extends AuthState {
+  SignOutSuccessful();
+}
+
+class SignOutFailed extends AuthState {
+  final String message;
+  SignOutFailed(this.message);
+}

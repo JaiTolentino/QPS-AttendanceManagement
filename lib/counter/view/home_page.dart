@@ -1,15 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qrcode_reader_web/qrcode_reader_web.dart';
 import 'package:ssoattendance/components/BottomNavbar.dart';
+import 'package:ssoattendance/counter/auth/auth_bloc.dart';
+import 'package:ssoattendance/repository/repository_bloc.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return HomeView();
+    return MultiBlocProvider(providers: [
+      BlocProvider(create: (context) => AuthBloc())
+    ], child: MultiBlocProvider(providers: [
+      BlocProvider(create: (context) => RepositoryBloc())
+    ], child: HomeView()));
   }
 }
 
@@ -32,6 +38,11 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(onPressed: () {
+          BlocProvider.of<AuthBloc>(context).add(
+            SignOutUser()
+          );
+        }, icon: Icon(Icons.logout), color: Color.fromRGBO(228, 142, 60, 1),),
         automaticallyImplyLeading: false,
         forceMaterialTransparency: true,
         title: Center(
@@ -47,6 +58,12 @@ class _HomeViewState extends State<HomeView> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          BlocListener<AuthBloc, AuthState>(listener: (context, state) {
+            if(state is SignOutSuccessful){
+              context.go('/');
+            }
+            
+          },child: Container(),),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -74,7 +91,9 @@ class _HomeViewState extends State<HomeView> {
                     ),
                     backgroundColor: Color.fromRGBO(228, 142, 60, 1),
                     fixedSize: Size(100, 40)),
-                onPressed: () {},
+                onPressed: () {
+                  BlocProvider.of<RepositoryBloc>(context).add(GetUsers());
+                },
                 label: Text(
                   'Search',
                   style: TextStyle(

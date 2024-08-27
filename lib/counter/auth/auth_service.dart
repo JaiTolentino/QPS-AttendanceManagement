@@ -11,4 +11,8 @@ class AuthService {
         {'tenant': '926d8c3e-a149-481e-9339-92623ac50cb3'});
     await FirebaseAuth.instance.signInWithPopup(microOAUTH);
   }
+
+  Future<void> signOutUser() async {
+    await firebaseAuth.signOut();
+  }
 }
