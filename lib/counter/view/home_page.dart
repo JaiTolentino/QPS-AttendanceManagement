@@ -31,6 +31,10 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   void initState() {
+    final email = user!.email as String;
+    BlocProvider.of<RepositoryBloc>(context).add(
+      GetLoggedInUser(email)
+    );
     super.initState();
   }
 

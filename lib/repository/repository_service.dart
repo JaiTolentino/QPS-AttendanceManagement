@@ -12,4 +12,8 @@ class RepositoryService {
   Future<Response<dynamic>> getUsers() async {
     return dio.get("https://questronixcomph.sharepoint.com/sites/SSOPowerApps/_api/web/lists/GetByTitle('TeamRoles_v2')/Items?\$expand=Name&\$select=*,Name/EMail", options: options);
   }
+
+  Future<Response<dynamic>> getLoggedInUser(String email) async {
+    return dio.get("https://questronixcomph.sharepoint.com/sites/SSOPowerApps/_api/web/lists/GetByTitle('TeamRoles_v2')/Items?\$expand=Name&\$select=*,Name/EMail&\$filter=Name/EMail eq '$email'", options: options);
+  }
 }

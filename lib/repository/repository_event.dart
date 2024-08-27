@@ -6,3 +6,8 @@ abstract class RepositoryEvent {
 class GetUsers extends RepositoryEvent {
   GetUsers();
 }
+
+class GetLoggedInUser extends RepositoryEvent {
+  GetLoggedInUser(this.email);
+  final String email;
+}
