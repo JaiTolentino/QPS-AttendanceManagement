@@ -9,7 +9,7 @@ class GetUsersSuccessState extends RepositoryState {
   GetUsersSuccessState(this.users);
 }
 
-class GetLoggedInUserState extends RepositoryState{
+class GetLoggedInUserState extends RepositoryState {
   final String email;
   final int Id;
   GetLoggedInUserState(this.email, this.Id);
@@ -19,7 +19,12 @@ class RepositoryInitState extends RepositoryState {
   RepositoryInitState();
 }
 
-class RepositoryFailedState extends RepositoryState{
+class RepositoryFailedState extends RepositoryState {
   final String message;
   RepositoryFailedState(this.message);
+}
+
+class GetUserEventsState extends RepositoryState {
+  final List<Event> events;
+  GetUserEventsState(this.events);
 }
